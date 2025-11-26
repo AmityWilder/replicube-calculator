@@ -61,3 +61,11 @@ Intersection of sets $\{\langle 1 \rangle, \dots, \langle 3 \rangle\} \cap \{\la
 ```py
 {1,...,3}&{-1,...,2}
 ```
+
+3D with union of 2D sets
+```math
+{\Big({\big(\underset{\text{cartesian product}}{\{-2, -2\} \times \{-1, \dots 3\}}\big)} \cup {\big(\{-2, \dots, 2\} \times \{-1, 3\}\big)}\Big)} \times \{3\}
+```
+```py
+(({-2,2}*{-1,...,3})|({-2,...,2}*{-1,3}))*{-3}
+```
