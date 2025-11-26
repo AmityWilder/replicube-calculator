@@ -56,7 +56,7 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
                         is_ellipsis = False
                         assert prev is not None
                         for n in range(prev+1, x):
-                            print(n)
+                            # print(n)
                             s.add(n)
                     s.add(x)
                     prev = x
