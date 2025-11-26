@@ -71,12 +71,11 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
 
 
 while True:
-    s = input()
+    s = input("set expression: ")
     if s is None or s == "exit": break
     tree = ast.parse(s)
     tree = next(ast.iter_child_nodes(tree)) # skip Module
     tree = next(ast.iter_child_nodes(tree)) # skip Expr
     s = dfs(tree)
-    print(s)
-    if s:
-        print(len(s))
+    # print(s)
+    print(f"voxels: {len(s)}")
