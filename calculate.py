@@ -11,29 +11,36 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
         if op is ast.Mult:
             s = set()
             for a in left:
-                if type(a) is tuple:
+                if isinstance(a, int):
+                    assert type(a) is not tuple[int, int, int]
+                    x=a
+                    for b in right:
+                        if isinstance(b, int):
+                            y=b
+                            s.add((x, y))
+                        elif len(b) == 2:
+                            y,z = b
+                            s.add((x, y, z))
+                        else:
+                            raise Exception("Dimension cannot exceed 3")
+                elif len(a) == 2:
                     x,y = a
                     for z in right:
                         s.add((x, y, z))
                 else:
-                    x=a
-                    for b in right:
-                        if type(b) is tuple:
-                            y,z = b
-                            s.add((x, y, z))
-                        else:
-                            y=b
-                            s.add((x, y))
+                    raise Exception("Dimension cannot exceed 3")
+            return s
         elif op is ast.BitOr:
-            assert type(left) == type(right)
-            s = left.union(right)
+            assert type(left) is type(right)
+            return left.union(right) # type: ignore
         elif op is ast.BitAnd:
-            assert type(left) == type(right)
-            s = left.intersection(right)
+            assert type(left) is type(right)
+            return left.intersection(right)
+        elif op is ast.Sub:
+            assert type(left) is type(right)
+            return left.difference(right)
         else:
             raise Exception(op)
-        # print(s)
-        return s
     elif type(root) is ast.Set:
         s=set()
         prev = None
