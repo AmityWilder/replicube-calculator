@@ -46,7 +46,7 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
                 elt = op_fields['operand']
                 elt_fields = {fieldname: value for fieldname, value in ast.iter_fields(elt)}
                 elt_fields['value'] *= -1
-            if type(elt) is ast.Constant or type(elt):
+            if type(elt) is ast.Constant:
                 x = elt_fields['value']
                 if x is ...:
                     is_ellipsis = True
@@ -71,14 +71,16 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
 
 
 while True:
-    try:
-        s = input()
-        if s is None or s == "exit": break
-        tree = ast.parse(s)
-        tree = next(ast.iter_child_nodes(tree)) # skip Module
-        tree = next(ast.iter_child_nodes(tree)) # skip Expr
-        s = dfs(tree)
-        print(s)
-        print(sum((len(xyz) for xyz in s)))
-    except Exception as e:
-        print(e)
+    s = input()
+    if s is None or s == "exit": break
+    tree = ast.parse(s)
+    tree = next(ast.iter_child_nodes(tree)) # skip Module
+    tree = next(ast.iter_child_nodes(tree)) # skip Expr
+    s = dfs(tree)
+    print(s)
+    if s:
+        if type(next(iter(s))) is int:
+            n = len(s)
+        else:
+            n = sum((len(xyz) for xyz in s))
+        print(n)
