@@ -40,7 +40,13 @@ def dfs(root: ast.AST) -> set[int] | set[tuple[int, int]] | set[tuple[int, int, 
         is_ellipsis = False
         for elt in fields['elts']:
             elt_fields = {fieldname: value for fieldname, value in ast.iter_fields(elt)}
-            if type(elt) is ast.Constant:
+            if type(elt) is ast.UnaryOp:
+                op_fields = {fieldname: value for fieldname, value in ast.iter_fields(elt)}
+                assert type(op_fields['op']) is ast.USub
+                elt = op_fields['operand']
+                elt_fields = {fieldname: value for fieldname, value in ast.iter_fields(elt)}
+                elt_fields['value'] *= -1
+            if type(elt) is ast.Constant or type(elt):
                 x = elt_fields['value']
                 if x is ...:
                     is_ellipsis = True
