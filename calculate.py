@@ -79,8 +79,4 @@ while True:
     s = dfs(tree)
     print(s)
     if s:
-        if type(next(iter(s))) is int:
-            n = len(s)
-        else:
-            n = sum((len(xyz) for xyz in s))
-        print(n)
+        print(len(s))
